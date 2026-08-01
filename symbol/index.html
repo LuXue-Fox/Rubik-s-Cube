@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>魔方轉動符號教學</title>
+
+    <script type="importmap">{
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.185.1/build/three.module.js",
+            "ArcballControls": "https://cdn.jsdelivr.net/npm/three@0.185.1/examples/jsm/controls/ArcballControls.js",
+            "Stats": "https://cdn.jsdelivr.net/npm/three@0.185.1/examples/jsm/libs/stats.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.185.1/examples/jsm/"
+        }
+    }
+    </script>
+    <script type="module" src="symbol.js" defer></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft JhengHei";
+        }
+
+        html,
+        body {
+            height: 100%;
+            overflow: hidden;
+            background: #181818;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+
+            background: #232323;
+            padding: 10px;
+            padding-top: 0px;
+
+            display: flex;
+            justify-content: center;
+            column-gap: 18px;
+
+            flex-wrap: wrap;
+
+            box-shadow: 0 2px 10px rgba(0, 0, 0, .3);
+
+        }
+
+        header div {
+            width: 100%;
+        }
+
+        header a {
+            color: #fff;
+            cursor: pointer;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        /*======================
+                上方按鈕
+        ======================*/
+        .cubeBtn {
+
+            width: 90px;
+            height: 75px;
+
+            border: none;
+
+            border-radius: 12px;
+
+            background: #2f2f2f;
+
+            color: white;
+
+            cursor: pointer;
+
+            transition: .25s;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            align-items: center;
+
+            gap: 5px;
+
+        }
+
+        .cubeBtn img {
+
+            width: 38px;
+            height: 38px;
+
+            object-fit: contain;
+
+        }
+
+        .cubeBtn span {
+
+            font-size: 15px;
+
+        }
+
+        .cubeBtn:hover {
+
+            background: #4da3ff;
+
+            transform: translateY(-3px);
+
+        }
+
+        .cubeBtn.active {
+
+            background: #2196F3;
+
+        }
+
+        /*======================
+              THREE區域
+        ======================*/
+
+        #viewer {
+
+            flex: 1;
+
+            position: relative;
+
+            overflow: hidden;
+
+            background: url("../img/transparentBG.png");
+
+        }
+
+        #infoBox {
+
+            position: absolute;
+
+            top: 10px;
+            left: 10px;
+
+            /* background: rgba(0, 0, 0, 0.4); */
+
+            padding: 8px;
+
+            border-radius: 10px;
+
+        }
+
+        #cubeGrid {
+
+            display: grid;
+
+        }
+
+        .cubeCell {
+
+            background: white;
+
+            border: 1px solid #555;
+
+        }
+
+        #reversion {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+
+        #reversion:hover {
+
+            background: rgba(0, 0, 0, .3);
+            transition: .25s;
+            transform: translateY(-3px);
+
+        }
+
+        #reversion img {
+            width: 50px;
+            height: 50px;
+        }
+
+        /*======================
+             下方符號按鈕
+        ======================*/
+
+        footer {
+
+            background: #202020;
+
+            padding: 12px;
+
+            flex-shrink: 0;
+
+        }
+
+        #symbolArea {
+
+            display: flex;
+
+            gap: 10px;
+
+            flex-wrap: wrap;
+
+            justify-content: center;
+
+            max-height: 130px;
+
+            overflow-y: auto;
+
+            overflow-x: hidden;
+
+        }
+
+        .symbolBtn {
+
+            width: 70px;
+            height: 45px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: #3f3f3f;
+
+            color: white;
+
+            font-size: 18px;
+
+            cursor: pointer;
+
+            transition: .2s;
+
+        }
+
+        .symbolBtn:hover {
+
+            background: #4da3ff;
+
+        }
+
+        #symbolArea::-webkit-scrollbar {
+            width: 8px;
+            /* 滾動條寬度 */
+        }
+
+        #symbolArea::-webkit-scrollbar-track {
+            background: #1e1e1e;
+            /* 軌道顏色 */
+            border-radius: 10px;
+        }
+
+        #symbolArea::-webkit-scrollbar-thumb {
+            background: #4da3ff;
+            /* 滑塊顏色 */
+            border-radius: 10px;
+            box-shadow: 0 0 8px #4da3ff;
+        }
+
+        #symbolArea::-webkit-scrollbar-thumb:hover {
+            background: #2196F3;
+            /* 滑鼠移上去顏色 */
+        }
+
+        /*======================
+                RWD
+        ======================*/
+
+        @media(max-width:700px) {
+
+            header {
+
+                gap: 4px;
+
+            }
+
+            .cubeBtn {
+
+                width: 52px;
+                height: 56px;
+                gap: 2px;
+
+            }
+
+            .cubeBtn img {
+
+                width: 26px;
+                height: 26px;
+
+            }
+
+            .cubeBtn span {
+
+                font-size: 12px;
+
+            }
+
+            #infoBox {
+
+                padding: 4px;
+                border-radius: 6px;
+
+            }
+
+            .symbolBtn {
+
+                width: 40px;
+
+                height: 25px;
+
+                font-size: 12px;
+
+            }
+
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- 上方 -->
+
+    <header>
+
+        <div>
+            <a href="../">
+                ＜返回
+            </a>
+        </div>
+        <button class="cubeBtn" data-size="222">
+            <img src="../img/2x2.png" alt="二階魔方">
+            <span>二階</span>
+        </button>
+
+        <button class="cubeBtn active" data-size="333">
+            <img src="../img/3x3.png" alt="三階魔方">
+            <span>三階</span>
+        </button>
+
+        <button class="cubeBtn" data-size="444">
+            <img src="../img/4x4.png" alt="四階魔方">
+            <span>四階</span>
+        </button>
+
+        <button class="cubeBtn" data-size="555">
+            <img src="../img/5x5.png" alt="五階魔方">
+            <span>五階</span>
+        </button>
+
+        <button class="cubeBtn" data-size="666">
+            <img src="../img/6x6.png" alt="六階魔方">
+            <span>六階</span>
+        </button>
+
+        <button class="cubeBtn" data-size="777">
+            <img src="../img/7x7.png" alt="七階魔方">
+            <span>七階</span>
+        </button>
+
+    </header>
+
+    <!-- Three.js -->
+
+    <main id="viewer">
+        <div id="infoBox">
+            <div id="cubeGrid"></div>
+        </div>
+        <div id="reversion" title="復原角度">
+            <img src="../img/reversion.png" alt="復原角度">
+        </div>
+    </main>
+
+    <!-- 下方 -->
+
+    <footer>
+
+        <div id="symbolArea"></div>
+
+    </footer>
+
+
+</body>
+
+</html>

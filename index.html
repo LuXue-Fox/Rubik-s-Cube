@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的魔方教學</title>
+
+    <script type="module">
+        import {randomScrambleForEvent} from "https://cdn.cubing.net/v0/js/cubing/scramble";
+
+        // const scramble = await randomScrambleForEvent("333"); console.log(scramble.toString());
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft JhengHei", sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        }
+
+        /* ===== 標題 ===== */
+
+        header {
+            width: 100%;
+            text-align: center;
+            padding: 45px 20px;
+        }
+
+        h1 {
+            color: white;
+            font-size: clamp(2rem, 5vw, 4rem);
+            letter-spacing: 3px;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, .4);
+        }
+
+        /* ===== 主內容 ===== */
+
+        .container {
+
+            width: min(1000px, 90%);
+            margin-bottom: 50px;
+
+            background: rgba(255, 255, 255, .08);
+
+            backdrop-filter: blur(15px);
+
+            border-radius: 25px;
+
+            padding: 40px;
+
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, .35);
+
+        }
+
+        .menu {
+
+            display: grid;
+
+            grid-template-columns: repeat(2, 1fr);
+
+            gap: 30px;
+
+        }
+
+        .btn {
+
+            height: 160px;
+
+            border: none;
+
+            border-radius: 20px;
+
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+
+            color: white;
+
+            font-size: 2rem;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: .3s;
+
+            box-shadow: 0 10px 20px rgba(0, 0, 0, .25);
+
+        }
+
+        .btn:hover {
+
+            transform: translateY(-8px) scale(1.03);
+
+            box-shadow: 0 20px 30px rgba(0, 0, 0, .35);
+
+        }
+
+        .btn:active {
+
+            transform: scale(.97);
+
+        }
+
+        /* ===== 手機 ===== */
+
+        @media (max-width:700px) {
+
+            .menu {
+
+                grid-template-columns: 1fr;
+
+            }
+
+            .btn {
+
+                height: 120px;
+
+                font-size: 1.7rem;
+
+            }
+
+            .container {
+
+                padding: 25px;
+
+            }
+
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <header>
+
+        <h1>🧩 我的魔方教學</h1>
+
+    </header>
+
+    <div class="container">
+
+        <div class="menu">
+
+            <button class="btn" onclick="location.href='./symbol/'">符號</button>
+
+            <button class="btn">公式</button>
+
+            <button class="btn">打亂</button>
+
+            <button class="btn">計時</button>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
