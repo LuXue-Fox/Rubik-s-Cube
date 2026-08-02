@@ -8,10 +8,7 @@
 
     <script type="importmap">{
         "imports": {
-            "three": "https://cdn.jsdelivr.net/npm/three@0.185.1/build/three.module.js",
-            "ArcballControls": "https://cdn.jsdelivr.net/npm/three@0.185.1/examples/jsm/controls/ArcballControls.js",
-            "Stats": "https://cdn.jsdelivr.net/npm/three@0.185.1/examples/jsm/libs/stats.module.js",
-            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.185.1/examples/jsm/"
+            "three": "https://cdn.jsdelivr.net/npm/three@0.185.1/build/three.module.js"
         }
     }
     </script>
@@ -136,58 +133,6 @@
 
             overflow: hidden;
 
-            background: url("../img/transparentBG.png");
-
-        }
-
-        #infoBox {
-
-            position: absolute;
-
-            top: 10px;
-            left: 10px;
-
-            /* background: rgba(0, 0, 0, 0.4); */
-
-            padding: 8px;
-
-            border-radius: 10px;
-
-        }
-
-        #cubeGrid {
-
-            display: grid;
-
-        }
-
-        .cubeCell {
-
-            background: white;
-
-            border: 1px solid #555;
-
-        }
-
-        #reversion {
-            position: absolute;
-            right: 10px;
-            bottom: 10px;
-            cursor: pointer;
-            border-radius: 10px;
-        }
-
-        #reversion:hover {
-
-            background: rgba(0, 0, 0, .3);
-            transition: .25s;
-            transform: translateY(-3px);
-
-        }
-
-        #reversion img {
-            width: 50px;
-            height: 50px;
         }
 
         /*======================
@@ -305,12 +250,9 @@
 
             }
 
-            #infoBox {
+            #symbolArea {
 
-                top: 3px;
-                left: 3px;
-                padding: 4px;
-                border-radius: 6px;
+                gap: px;
 
             }
 
@@ -374,14 +316,7 @@
 
     <!-- Three.js -->
 
-    <main id="viewer">
-        <div id="infoBox">
-            <div id="cubeGrid"></div>
-        </div>
-        <div id="reversion" title="復原角度">
-            <img src="../img/reversion.png" alt="復原角度">
-        </div>
-    </main>
+    <main id="viewer"></main>
 
     <!-- 下方 -->
 
