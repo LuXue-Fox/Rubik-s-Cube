@@ -16,8 +16,8 @@ import Cube_3D from '../Cube_3D.js';
 
 使用範例:
 var cube = new Cube_3D(viewer, size);
-建立3D魔方
-viewer是渲染3D畫面的畫布，可以使用document.body或是其他div等元素
+建立3D魔方,
+viewer是渲染3D畫面的畫布，可以使用document.body或是其他div等元素,
 size是要建立的魔方的階數，範圍2~7
 
 
