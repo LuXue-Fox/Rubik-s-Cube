@@ -237,6 +237,7 @@ var Cube_3D = function (viewer, size) {
         var l = 1;  //轉動層數
         if (s.includes('w')) l = 2;
         if (s.includes('3')) l = 3;
+        if (s.includes('x') || s.includes('y') || s.includes('z')) l = size;
         var two_laps = s.includes('2');
         var group = new THREE.Group();
         scene.add(group);
@@ -444,6 +445,192 @@ var Cube_3D = function (viewer, size) {
                 cube_animation(group, "z", 0, 90, -1);
             }
         }
+        else if (s.includes('M')) {
+            for (let key in cube_mesh) {
+                var str = removeChar(key, 0);
+                if (Number(key[0]) == 1) {
+                    group.add(cube_mesh[key]);
+                    list_key[0][Number(str[0])][Number(str[1])] = key;
+                    list_value[0][Number(str[0])][Number(str[1])] = cube_mesh[key];
+                }
+            };
+            if (!s.includes("'")) {
+                if (!two_laps) {  //M
+                    rot = 1;
+                    change_cube_data("M", 1);
+                    cube_animation(group, "x", 0, 90, 1);
+                }
+                else {  //M2
+                    rot = 2;
+                    change_cube_data("M", 1);
+                    change_cube_data("M", 1);
+                    cube_animation(group, "x", 0, 180, 1);
+                }
+            } else {  //M'
+                rot = 0;
+                change_cube_data("M'", 1);
+                cube_animation(group, "x", 0, 90, -1);
+            }
+        }
+        else if (s.includes('S')) {
+            for (let key in cube_mesh) {
+                var str = removeChar(key, 2);
+                if (Number(key[2]) == 1) {
+                    group.add(cube_mesh[key]);
+                    list_key[0][Number(str[0])][Number(str[1])] = key;
+                    list_value[0][Number(str[0])][Number(str[1])] = cube_mesh[key];
+                }
+            };
+            if (!s.includes("'")) {
+                if (!two_laps) {  //S
+                    rot = 0;
+                    change_cube_data("S", 1);
+                    cube_animation(group, "z", 0, 90, -1);
+                }
+                else {  //S2
+                    rot = 2;
+                    change_cube_data("S", 1);
+                    change_cube_data("S", 1);
+                    cube_animation(group, "z", 0, 180, -1);
+                }
+            } else {  //S'
+                rot = 1;
+                change_cube_data("S'", 1);
+                cube_animation(group, "z", 0, 90, 1);
+            }
+        }
+        else if (s.includes('E')) {
+            for (let key in cube_mesh) {
+                var str = removeChar(key, 1);
+                if (Number(key[1]) == 1) {
+                    group.add(cube_mesh[key]);
+                    list_key[0][Number(str[0])][Number(str[1])] = key;
+                    list_value[0][Number(str[0])][Number(str[1])] = cube_mesh[key];
+                }
+            };
+            if (!s.includes("'")) {
+                if (!two_laps) {  //E
+                    rot = 0;
+                    change_cube_data("E", 1);
+                    cube_animation(group, "y", 0, 90, 1);
+                }
+                else {  //E2
+                    rot = 2;
+                    change_cube_data("E", 1);
+                    change_cube_data("E", 1);
+                    cube_animation(group, "y", 0, 180, 1);
+                }
+            } else {  //E'
+                rot = 1;
+                change_cube_data("E'", 1);
+                cube_animation(group, "y", 0, 90, -1);
+            }
+        }
+        else if (s.includes('x')) {
+            for (var i = 0; i < l; i++) {
+                for (let key in cube_mesh) {
+                    var str = removeChar(key, 0);
+                    if (Number(key[0]) == (size - 1 - i)) {
+                        group.add(cube_mesh[key]);
+                        list_key[i][Number(str[0])][Number(str[1])] = key;
+                        list_value[i][Number(str[0])][Number(str[1])] = cube_mesh[key];
+                    }
+                };
+            }
+            if (!s.includes("'")) {
+                if (!two_laps) {  //x
+                    rot = 0;
+                    cube_data.R = rotateCW(cube_data.R);
+                    cube_data.L = rotateCCW(cube_data.L);
+                    change_cube_data("R", l);
+                    cube_animation(group, "x", 0, 90, -1);
+                }
+                else {  //x2
+                    rot = 2;
+                    cube_data.R = rotate180(cube_data.R);
+                    cube_data.L = rotate180(cube_data.L);
+                    change_cube_data("R", l);
+                    change_cube_data("R", l);
+                    cube_animation(group, "x", 0, 180, -1);
+                }
+            } else {  //x'
+                rot = 1;
+                cube_data.R = rotateCCW(cube_data.R);
+                cube_data.L = rotateCW(cube_data.L);
+                change_cube_data("R'", l);
+                cube_animation(group, "x", 0, 90, 1);
+            }
+        }
+        else if (s.includes('y')) {
+            for (var i = 0; i < l; i++) {
+                for (let key in cube_mesh) {
+                    var str = removeChar(key, 1);
+                    if (Number(key[1]) == (size - 1 - i)) {
+                        group.add(cube_mesh[key]);
+                        list_key[i][Number(str[0])][Number(str[1])] = key;
+                        list_value[i][Number(str[0])][Number(str[1])] = cube_mesh[key];
+                    }
+                };
+            }
+            if (!s.includes("'")) {
+                if (!two_laps) {  //y
+                    rot = 1;
+                    cube_data.U = rotateCW(cube_data.U);
+                    cube_data.D = rotateCCW(cube_data.D);
+                    change_cube_data("U", l);
+                    cube_animation(group, "y", 0, 90, -1);
+                }
+                else {  //y2
+                    rot = 2;
+                    cube_data.U = rotate180(cube_data.U);
+                    cube_data.D = rotate180(cube_data.D);
+                    change_cube_data("U", l);
+                    change_cube_data("U", l);
+                    cube_animation(group, "y", 0, 180, -1);
+                }
+            } else {  //y'
+                rot = 0;
+                cube_data.U = rotateCCW(cube_data.U);
+                cube_data.D = rotateCW(cube_data.D);
+                change_cube_data("U'", l);
+                cube_animation(group, "y", 0, 90, 1);
+            }
+        }
+        else if (s.includes('z')) {
+            for (var i = 0; i < l; i++) {
+                for (let key in cube_mesh) {
+                    var str = removeChar(key, 2);
+                    if (Number(key[2]) == (size - 1 - i)) {
+                        group.add(cube_mesh[key]);
+                        list_key[i][Number(str[0])][Number(str[1])] = key;
+                        list_value[i][Number(str[0])][Number(str[1])] = cube_mesh[key];
+                    }
+                };
+            }
+            if (!s.includes("'")) {
+                if (!two_laps) {  //z
+                    rot = 0;
+                    cube_data.F = rotateCW(cube_data.F);
+                    cube_data.B = rotateCCW(cube_data.B);
+                    change_cube_data("F", l);
+                    cube_animation(group, "z", 0, 90, -1);
+                }
+                else {  //z2
+                    rot = 2;
+                    cube_data.F = rotate180(cube_data.F);
+                    cube_data.B = rotate180(cube_data.B);
+                    change_cube_data("F", l);
+                    change_cube_data("F", l);
+                    cube_animation(group, "z", 0, 180, -1);
+                }
+            } else {  //z'
+                rot = 1;
+                cube_data.F = rotateCCW(cube_data.F);
+                cube_data.B = rotateCW(cube_data.B);
+                change_cube_data("F'", l);
+                cube_animation(group, "z", 0, 90, 1);
+            }
+        }
 
         var lists = new Array(l);
         for (var i = 0; i < l; i++) {
@@ -453,8 +640,10 @@ var Cube_3D = function (viewer, size) {
         for (var i = 0; i < l; i++) {
             for (var x = 0; x < size; x++) {
                 for (var y = 0; y < size; y++) {
-                    if (i != 0 && i != m && x != 0 && x != m && y != 0 && y != m) continue;
-                    cube_mesh[list_key[i][x][y]] = lists[i][x][y];
+                    // if (x != 0 && x != m && y != 0 && y != m) continue;
+                    if (Object.hasOwn(cube_mesh, list_key[i][x][y])) {
+                        cube_mesh[list_key[i][x][y]] = lists[i][x][y];
+                    }
                 }
             }
         }
@@ -690,6 +879,118 @@ var Cube_3D = function (viewer, size) {
             cube_data.D = rotate180(cube_data.D);
             cube_data.R = rotateCW(cube_data.R);
         }
+        else if (f == "M") {
+            var list = ['U', 'B', 'D', 'F'];
+            cube_data.U = rotateCW(cube_data.U);
+            cube_data.B = rotateCCW(cube_data.B);
+            cube_data.D = rotateCW(cube_data.D);
+            cube_data.F = rotateCW(cube_data.F);
+            for (var i = 0; i < l; i++) {
+                temp[i] = cube_data['U'][1];
+            }
+            for (var i = 0; i < 3; i++) {
+                for (var j = 0; j < l; j++) {
+                    cube_data[list[i]][1] = cube_data[list[i + 1]][1];
+                }
+            }
+            for (var i = 0; i < l; i++) {
+                cube_data['F'][1] = temp[i];
+            }
+            cube_data.U = rotateCCW(cube_data.U);
+            cube_data.B = rotateCW(cube_data.B);
+            cube_data.D = rotateCCW(cube_data.D);
+            cube_data.F = rotateCCW(cube_data.F);
+        }
+        else if (f == "M'") {
+            var list = ['U', 'F', 'D', 'B'];
+            cube_data.U = rotateCW(cube_data.U);
+            cube_data.F = rotateCW(cube_data.F);
+            cube_data.D = rotateCW(cube_data.D);
+            cube_data.B = rotateCCW(cube_data.B);
+            for (var i = 0; i < l; i++) {
+                temp[i] = cube_data['U'][1];
+            }
+            for (var i = 0; i < 3; i++) {
+                for (var j = 0; j < l; j++) {
+                    cube_data[list[i]][1] = cube_data[list[i + 1]][1];
+                }
+            }
+            for (var i = 0; i < l; i++) {
+                cube_data['B'][1] = temp[i];
+            }
+            cube_data.U = rotateCCW(cube_data.U);
+            cube_data.F = rotateCCW(cube_data.F);
+            cube_data.D = rotateCCW(cube_data.D);
+            cube_data.B = rotateCW(cube_data.B);
+        }
+        else if (f == "S") {
+            var list = ['U', 'L', 'D', 'R'];
+            cube_data.L = rotateCW(cube_data.L);
+            cube_data.D = rotate180(cube_data.D);
+            cube_data.R = rotateCCW(cube_data.R);
+            for (var i = 0; i < l; i++) {
+                temp[i] = cube_data['U'][1];
+            }
+            for (var i = 0; i < 3; i++) {
+                for (var j = 0; j < l; j++) {
+                    cube_data[list[i]][1] = cube_data[list[i + 1]][1];
+                }
+            }
+            for (var i = 0; i < l; i++) {
+                cube_data['R'][1] = temp[i];
+            }
+            cube_data.L = rotateCCW(cube_data.L);
+            cube_data.D = rotate180(cube_data.D);
+            cube_data.R = rotateCW(cube_data.R);
+        }
+        else if (f == "S'") {
+            var list = ['U', 'R', 'D', 'L'];
+            cube_data.R = rotateCCW(cube_data.R);
+            cube_data.D = rotate180(cube_data.D);
+            cube_data.L = rotateCW(cube_data.L);
+            for (var i = 0; i < l; i++) {
+                temp[i] = cube_data['U'][1];
+            }
+            for (var i = 0; i < 3; i++) {
+                for (var j = 0; j < l; j++) {
+                    cube_data[list[i]][1] = cube_data[list[i + 1]][1];
+                }
+            }
+            for (var i = 0; i < l; i++) {
+                cube_data['L'][1] = temp[i];
+            }
+            cube_data.R = rotateCW(cube_data.R);
+            cube_data.D = rotate180(cube_data.D);
+            cube_data.L = rotateCCW(cube_data.L);
+        }
+        else if (f == "E") {
+            var list = ['L', 'B', 'R', 'F'];
+            for (var i = 0; i < l; i++) {
+                temp[i] = cube_data['L'][1];
+            }
+            for (var i = 0; i < 3; i++) {
+                for (var j = 0; j < l; j++) {
+                    cube_data[list[i]][1] = cube_data[list[i + 1]][1];
+                }
+            }
+            for (var i = 0; i < l; i++) {
+                cube_data['F'][1] = temp[i];
+            }
+        }
+        else if (f == "E'") {
+            var list = ['L', 'F', 'R', 'B'];
+            for (var i = 0; i < l; i++) {
+                temp[i] = cube_data['L'][1];
+            }
+            for (var i = 0; i < 3; i++) {
+                for (var j = 0; j < l; j++) {
+                    cube_data[list[i]][1] = cube_data[list[i + 1]][1];
+                }
+            }
+            for (var i = 0; i < l; i++) {
+                cube_data['B'][1] = temp[i];
+            }
+        }
 
         change_grid();
     }
@@ -720,7 +1021,7 @@ var Cube_3D = function (viewer, size) {
             scene.remove(group);
             is_moving = false;
         }
-        else setTimeout(cube_animation, 1000 / 120, group, ax, i, r, pn);
+        else setTimeout(cube_animation, 1000 / 180, group, ax, i, r, pn);
     }
 
     function createGrid() {
