@@ -1,4 +1,4 @@
-若要使用Cube_3D.js，請在html的<head>裡先加入以下內容:
+若要使用Cube_3D.js，請在html的head裡先加入以下內容:
 ```
     <script type="importmap">{
         "imports": {
