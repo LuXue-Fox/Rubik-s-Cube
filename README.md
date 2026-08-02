@@ -4,8 +4,8 @@
             "three": "https://cdn.jsdelivr.net/npm/three@0.185.1/build/three.module.js"
         }
     }
-    </script>```
-
+    </script>
+```
 並在Cube_3D.js import 至JS裡，例如:
 import Cube_3D from '../Cube_3D.js';
 
