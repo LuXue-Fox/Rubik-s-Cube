@@ -22,6 +22,7 @@ var Cube_3D = function (viewer, size) {
     var grids = null;
     var grid_xy = null;
     var is_moving = false;
+    var infoBox = null;
 
     var rotate_list = [rotateCW, rotateCCW, rotate180];
 
@@ -69,6 +70,19 @@ var Cube_3D = function (viewer, size) {
         renderer.setSize(viewer.clientWidth, viewer.clientHeight);
     }
 
+    // 左上顯示6面顏色區塊的RWD設置
+    const mediaQuery = window.matchMedia("(max-width: 700px)");
+    mediaQuery.addEventListener("change", (e) => {
+        if (e.matches) {
+            // console.log("進入 700px 以下");
+            infoBox.style.cssText = 'position: absolute;top: 3px;left: 3px;padding: 4px;border-radius: 6px;';
+        } else {
+            // console.log("超過 700px");
+            infoBox.style.cssText = 'position: absolute;top: 10px;left: 10px;padding: 8px;border-radius: 10px;';
+        }
+    });
+
+    //右上角顯示幀數的
     const stats = Stats();
     viewer.appendChild(stats.dom);
     stats.domElement.style.position = 'absolute';
@@ -713,7 +727,8 @@ var Cube_3D = function (viewer, size) {
 
         grids = {};
 
-        const infoBox = document.createElement("div");
+        if (infoBox instanceof Element) infoBox.innerHTML = "";
+        infoBox = document.createElement("div");
         infoBox.style.cssText = 'position: absolute;top: 10px;left: 10px;padding: 8px;border-radius: 10px;';
         // const grid = document.getElementById("cubeGrid");
         const grid = document.createElement("div");
