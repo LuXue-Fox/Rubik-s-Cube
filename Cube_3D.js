@@ -12,6 +12,7 @@ var Cube_3D = function (viewer, size) {
     }
 
     var FPS = 1000;  //幀數(每秒畫面刷新次數)
+    var AnimationSpeed = 180;
     var intervalId = null;
 
     var now_cube = null;
@@ -28,7 +29,7 @@ var Cube_3D = function (viewer, size) {
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(
-        80,
+        viewer.clientWidth > 700 ? 80 : 100,
         viewer.clientWidth / viewer.clientHeight,
         0.1,
         500
@@ -68,6 +69,13 @@ var Cube_3D = function (viewer, size) {
         camera.aspect = viewer.clientWidth / viewer.clientHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(viewer.clientWidth, viewer.clientHeight);
+
+        if (viewer.clientWidth < 700) {
+            setFov(100);
+        }
+        else {
+            setFov(80);
+        }
     }
 
     // 左上顯示6面顏色區塊的RWD設置
@@ -134,6 +142,7 @@ var Cube_3D = function (viewer, size) {
         }, 1000 / FPS);
     }
 
+    //設置畫面刷新率
     function setFPS(fps) {
         if (typeof fps === 'number') FPS = fps;
         else return;
@@ -141,6 +150,16 @@ var Cube_3D = function (viewer, size) {
         intervalId = setInterval(() => {
             render();
         }, 1000 / FPS);
+    }
+
+    //設置鏡頭垂直視野(角度)，最大180
+    function setFov(fov) {
+        camera.fov = fov;
+    }
+
+    //設置動畫速度
+    function setAnimationSpeed(speed) {
+        AnimationSpeed = speed;
     }
 
     class CUBE {
@@ -1021,7 +1040,7 @@ var Cube_3D = function (viewer, size) {
             scene.remove(group);
             is_moving = false;
         }
-        else setTimeout(cube_animation, 1000 / 180, group, ax, i, r, pn);
+        else setTimeout(cube_animation, 1000 / AnimationSpeed, group, ax, i, r, pn);
     }
 
     function createGrid() {
@@ -1190,6 +1209,8 @@ var Cube_3D = function (viewer, size) {
         stats: stats,
         start: start,
         setFPS: setFPS,
+        setAnimationSpeed: setAnimationSpeed,
+        setFov: setFov,
         move: move,
         end: end
     };
