@@ -15,24 +15,30 @@ import Cube_3D from '../Cube_3D.js';
 
 
 使用範例:
+```
 var cube = new Cube_3D(viewer, size);
+```
 建立3D魔方,
 viewer是渲染3D畫面的畫布，可以使用document.body或是其他div等元素,
 size是要建立的魔方的階數，範圍2~7
 
 
 建立完後使用start()來啟動:
+```
 cube.start();
-
+```
 
 操作魔方可使用move(symbol)
 symbol為字串，請填入轉動代號(R、U'、B2...):
+```
 cube.move("U");
-
+```
 
 更換畫面刷新率可使用setFPS(FPS)
 FPS為幀數(每秒刷新的次數):
+```
 cube.setFPS(240);
+```
 受限於瀏覽器及螢幕的刷新率
 
 
