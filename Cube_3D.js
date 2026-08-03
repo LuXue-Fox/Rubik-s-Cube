@@ -29,7 +29,7 @@ var Cube_3D = function (viewer, size) {
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(
-        viewer.clientWidth > 700 ? 80 : 100,
+        Math.min(viewer.clientWidth, viewer.clientHeight) > 700 ? 70 : 90,
         viewer.clientWidth / viewer.clientHeight,
         0.1,
         500
@@ -70,11 +70,11 @@ var Cube_3D = function (viewer, size) {
         camera.updateProjectionMatrix();
         renderer.setSize(viewer.clientWidth, viewer.clientHeight);
 
-        if (viewer.clientWidth < 700) {
-            setFov(100);
+        if (Math.min(viewer.clientWidth, viewer.clientHeight) < 700 ) {
+            setFov(90);
         }
         else {
-            setFov(80);
+            setFov(70);
         }
     }
 
@@ -137,6 +137,7 @@ var Cube_3D = function (viewer, size) {
         createGrid();
         change_grid();
         create_reversion_btn();
+        resize();
         intervalId = setInterval(() => {
             render();
         }, 1000 / FPS);
