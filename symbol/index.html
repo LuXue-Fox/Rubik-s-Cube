@@ -47,6 +47,7 @@
             flex-wrap: wrap;
 
             box-shadow: 0 2px 10px rgba(0, 0, 0, .3);
+            flex-shrink: 0;
 
         }
 
@@ -147,6 +148,9 @@
 
             flex-shrink: 0;
 
+            overflow-y: auto;
+
+            overflow-x: hidden;
         }
 
         #symbolArea {
@@ -161,16 +165,12 @@
 
             max-height: 130px;
 
-            overflow-y: auto;
-
-            overflow-x: hidden;
-
         }
 
         .symbolBtn {
 
-            width: 70px;
-            height: 45px;
+            width: 60px;
+            height: 40px;
 
             border: none;
 
@@ -180,7 +180,7 @@
 
             color: white;
 
-            font-size: 18px;
+            font-size: 16px;
 
             cursor: pointer;
 
@@ -194,25 +194,25 @@
 
         }
 
-        #symbolArea::-webkit-scrollbar {
+        footer::-webkit-scrollbar {
             width: 8px;
             /* 滾動條寬度 */
         }
 
-        #symbolArea::-webkit-scrollbar-track {
+        footer::-webkit-scrollbar-track {
             background: #1e1e1e;
             /* 軌道顏色 */
             border-radius: 10px;
         }
 
-        #symbolArea::-webkit-scrollbar-thumb {
+        footer::-webkit-scrollbar-thumb {
             background: #4da3ff;
             /* 滑塊顏色 */
             border-radius: 10px;
             box-shadow: 0 0 8px #4da3ff;
         }
 
-        #symbolArea::-webkit-scrollbar-thumb:hover {
+        footer::-webkit-scrollbar-thumb:hover {
             background: #2196F3;
             /* 滑鼠移上去顏色 */
         }
@@ -221,7 +221,43 @@
                 RWD
         ======================*/
 
-        @media(max-width:700px) {
+        @media (orientation: landscape) {
+            body {
+                flex-direction: row;
+            }
+
+            header {
+                width: auto;
+                /* 左側寬度 */
+                height: 100%;
+                flex-wrap: nowrap;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                overflow-y: auto;
+            }
+
+            .cubeBtn {
+                margin: 8px;
+            }
+
+            #viewer {
+                flex: 1;
+                height: 100%;
+            }
+
+            footer {
+                width: 24%;
+                /* 右側寬度 */
+                height: 100%;
+            }
+
+            #symbolArea {
+                max-height: none;
+            }
+        }
+
+        @media(max-width:700px) or (max-height:700px) {
 
             header {
 
@@ -233,7 +269,6 @@
 
                 width: 52px;
                 height: 56px;
-                gap: 2px;
 
             }
 
@@ -250,9 +285,13 @@
 
             }
 
+            footer {
+                padding: 6px;
+            }
+
             #symbolArea {
 
-                gap: px;
+                gap: 5px;
 
             }
 
